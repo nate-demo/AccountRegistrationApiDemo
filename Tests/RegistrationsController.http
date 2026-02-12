@@ -1,0 +1,157 @@
+### Account Registration API Demo - Registrations Endpoints
+### These tests can be executed in VS Code using the REST Client extension
+### Install: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@baseUrl = http://localhost:5000
+@accountId = 
+@newRegistrationId = 
+
+### 1. GET All Registrations (Default pagination)
+GET {{baseUrl}}/api/registrations
+Accept: application/json
+
+### 2. GET All Registrations (Custom pagination)
+GET {{baseUrl}}/api/registrations?page=1&pageSize=5
+Accept: application/json
+
+### 3. GET All Registrations (Filter by Account ID)
+# Replace {{accountId}} with actual account ID
+GET {{baseUrl}}/api/registrations?accountId={{accountId}}
+Accept: application/json
+
+### 4. GET All Registrations (Filter by Status - Pending)
+GET {{baseUrl}}/api/registrations?status=Pending
+Accept: application/json
+
+### 5. GET All Registrations (Filter by Status - Confirmed)
+GET {{baseUrl}}/api/registrations?status=Confirmed
+Accept: application/json
+
+### 6. GET All Registrations (Filter by Status - Cancelled)
+GET {{baseUrl}}/api/registrations?status=Cancelled
+Accept: application/json
+
+### 7. GET All Registrations (Filter by Status - Completed)
+GET {{baseUrl}}/api/registrations?status=Completed
+Accept: application/json
+
+### 8. GET All Registrations (Combined filters - Account ID and Status)
+GET {{baseUrl}}/api/registrations?accountId={{accountId}}&status=Pending
+Accept: application/json
+
+### 9. CREATE New Registration
+# First, get an account ID from /api/accounts and set @accountId variable
+# @name createRegistration
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "{{accountId}}",
+  "status": "Pending",
+  "eventOrCourseName": "Advanced REST API Workshop",
+  "amount": 299.99,
+  "details": "Full-day workshop on REST API best practices"
+}
+
+### 10. CREATE Another Registration (Different Status)
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "{{accountId}}",
+  "status": "Confirmed",
+  "eventOrCourseName": "Azure DevOps Training",
+  "amount": 499.99,
+  "details": "3-day intensive Azure DevOps certification training"
+}
+
+### 11. CREATE Registration with No Amount (Optional field)
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "{{accountId}}",
+  "status": "Pending",
+  "eventOrCourseName": "Free Webinar: Cloud Native Development",
+  "amount": null,
+  "details": "Complimentary online webinar series"
+}
+
+### ========================================
+### Validation Tests
+### ========================================
+
+### 12. CREATE Registration - Missing Required Fields (Should fail validation)
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "00000000-0000-0000-0000-000000000000",
+  "eventOrCourseName": ""
+}
+
+### 13. CREATE Registration - Non-existent Account (Should return 400)
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "00000000-0000-0000-0000-000000000000",
+  "status": "Pending",
+  "eventOrCourseName": "Test Event",
+  "amount": 100.00,
+  "details": "Test registration for non-existent account"
+}
+
+### 14. CREATE Registration - Invalid Account ID Format
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "invalid-guid",
+  "status": "Pending",
+  "eventOrCourseName": "Test Event",
+  "amount": 100.00,
+  "details": "Test with invalid GUID format"
+}
+
+### ========================================
+### Complete Workflow Test
+### ========================================
+
+### 15. Complete Workflow - Create Account
+# @name workflowCreateAccount
+POST {{baseUrl}}/api/accounts
+Content-Type: application/json
+
+{
+  "firstName": "Workflow",
+  "lastName": "Tester",
+  "email": "workflow.tester@example.com",
+  "phone": "+1-555-WORKFLOW",
+  "address": "100 Workflow Lane, Test City, TC 99999",
+  "status": "Active"
+}
+
+### 16. Complete Workflow - Create Registration for New Account
+# After executing step 15, copy the account ID to @accountId variable
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "accountId": "{{accountId}}",
+  "status": "Confirmed",
+  "eventOrCourseName": "Complete Workflow Test Event",
+  "amount": 149.99,
+  "details": "Testing complete registration workflow"
+}
+
+### 17. Complete Workflow - Verify Account with Registrations
+GET {{baseUrl}}/api/accounts/{{accountId}}
+Accept: application/json
+
+### 18. Complete Workflow - Get All Registrations for Account
+GET {{baseUrl}}/api/accounts/{{accountId}}/registrations
+Accept: application/json
+
+### 19. Complete Workflow - Cleanup (Delete Account)
+DELETE {{baseUrl}}/api/accounts/{{accountId}}
