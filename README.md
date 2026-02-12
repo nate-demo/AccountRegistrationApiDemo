@@ -115,7 +115,32 @@ All list endpoints support `?page=1&pageSize=10` query parameters. Responses inc
 
 ---
 
-## 🧪 Testing with Swagger
+## 🧪 Testing the API
+
+### Option 1: VS Code REST Client (Recommended for Developers)
+
+We provide comprehensive `.http` test files that can be executed directly in VS Code, acting like Postman tests. This is the fastest way to test all endpoints!
+
+**Prerequisites:**
+- Install the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for VS Code
+
+**Quick Start:**
+1. Start the API with `dotnet run`
+2. Open `Tests/AccountsController.http` or `Tests/RegistrationsController.http` in VS Code
+3. Click "Send Request" above any HTTP request
+4. View the response in the split pane
+
+**Features:**
+- ✅ All endpoints covered (Accounts & Registrations)
+- ✅ Happy path tests
+- ✅ Validation and error handling tests
+- ✅ Variables for easy ID management
+- ✅ Complete workflow tests
+- ✅ Version control friendly (plain text files)
+
+📖 See [Tests/README.md](Tests/README.md) for detailed instructions and tips.
+
+### Option 2: Swagger UI (Interactive Browser Testing)
 
 1. Run the app with `dotnet run`
 2. Open `http://localhost:5000/swagger`
