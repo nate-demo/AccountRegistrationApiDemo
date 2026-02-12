@@ -1,3 +1,4 @@
+[![Build and Run API](https://github.com/nate-demo/AccountRegistrationApiDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/nate-demo/AccountRegistrationApiDemo/actions/workflows/ci.yml)
 # AccountRegistrationApiDemo
 
 A lightweight, beginner-friendly **ASP.NET Core Web API** that uses **static JSON files** as its data source — no database, no EF Core, no authentication. Ideal for training, demos, and learning REST API fundamentals.
