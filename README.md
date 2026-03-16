@@ -158,6 +158,33 @@ We provide comprehensive `.http` test files that can be executed directly in VS 
 
 ---
 
+## ⚙️ CI / GitHub Actions
+
+This repository uses a **reusable workflow** from [nate-demo/actions](https://github.com/nate-demo/actions) to run the .NET CI pipeline.
+
+The workflow is invoked in `.github/workflows/ci.yml`:
+
+```yaml
+name: Build and Run API
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  dotnet-ci:
+    permissions:
+      contents: read
+    uses: nate-demo/actions/.github/workflows/dotnet-ci.yml@main
+    secrets: inherit
+```
+
+`secrets: inherit` passes all repository secrets through to the reusable workflow so it has access to any credentials it needs.
+
+---
+
 ## 🛠 Tech Stack
 
 | Component | Package/Tech |
