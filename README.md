@@ -3,6 +3,8 @@
 
 A lightweight, beginner-friendly **ASP.NET Core Web API** that uses **static JSON files** as its data source — no database, no EF Core, no authentication. Ideal for training, demos, and learning REST API fundamentals.
 
+📘 Looking for request/response examples? See [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
+
 ---
 
 ## 📁 Project Structure
